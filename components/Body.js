@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const getData = async () => {
   const data = await fetch("https://pokeapi.co/api/v2/pokemon/ditto")
@@ -41,29 +42,53 @@ const Body = () => {
       </div>
 
       {/* Shows the layout of all the NFTs */}
-      <div className="relative flex flex-row flex-wrap items-center justify-center gap-10 bg-black px-8 pb-[100%] pt-[112px]">
-        {dataToggle ? (
-          <>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-            <div className=" h-[400px] w-[400px] border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </>
-        ) : (
-          <div></div>
-        )}
-      </div>
+
+      {dataToggle ? (
+        <div className="relative flex flex-row flex-wrap items-center justify-center gap-10 bg-black px-2 pt-[112px]">
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+          <div>
+            <Image src="/square.jpg" width={300} height={300} />
+            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
+          </div>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 };
