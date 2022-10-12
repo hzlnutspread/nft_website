@@ -72,11 +72,17 @@ const Body = ({ isReset, toggleReset, dataShowing, toggleData }) => {
         >
           {data.map((token, index) => {
             return (
-              <div key={index}>
-                <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-[4px_4px_0px_0px] border-[1px] border-solid border-orange-500 pb-[100%]">
+              <div
+                key={index}
+                className="overflow-hidden rounded-[4px_4px_4px_4px] border-[4px] border-double border-white"
+              >
+                <div className="relative pb-[100%]">
                   <Image src={token.token.image} layout="fill" />
                 </div>
-                <div className="w-full border-[1px] border-solid border-orange-500 bg-black text-center text-white">{`${token.token.tokenId}`}</div>
+                <div className="w-fullbg-black text-center text-white">{`#${token.token.tokenId}`}</div>
+                <div className="w-full cursor-pointer rounded-[0px_0px_4px_4px]  bg-blue-500  p-3 text-center text-white">
+                  Show Stats
+                </div>
               </div>
             );
           })}
