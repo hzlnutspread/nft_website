@@ -4,6 +4,7 @@ import Image from "next/image";
 const reservoir_api_key = process.env.RESERVOIR_KEY;
 const collectionId = "0xaAF03a65CbD8f01b512Cd8d530a675b3963dE255";
 const myWalletAddress = "0xdf5a18A102627c2E9C1Ba8534D0DAD94B284f619";
+const API_LIMIT = 100;
 
 const options = {
   method: "GET",
@@ -11,12 +12,21 @@ const options = {
 };
 
 const getData = async () => {
-  const data = await fetch(
-    `https://api.reservoir.tools/users/${myWalletAddress}/tokens/v5?collection=${collectionId}&sortBy=acquiredAt&sortDirection=desc&offset=0&limit=20&includeTopBid=false`,
-    options
-  )
-    .then((res) => res.json())
-    .then((data) => data);
+  let data = [];
+  let lastRunCount = 0;
+  do {
+    const apiData = await fetch(
+      `https://api.reservoir.tools/users/${myWalletAddress}/tokens/v5?collection=${collectionId}&sortBy=acquiredAt&sortDirection=desc&offset=${data.length}&limit=${API_LIMIT}&includeTopBid=false`,
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+
+    lastRunCount = apiData.tokens.length;
+    data = [...data, ...apiData.tokens];
+    console.log(data.length);
+  } while (lastRunCount === API_LIMIT);
+
   console.log(data);
   return data;
 };
@@ -63,13 +73,10 @@ const Body = ({ isReset }) => {
               : "grid grid-cols-2 gap-5 overflow-hidden bg-black px-8 pb-16 pt-[112px] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
           }
         >
-          {data.tokens.map((token, index) => {
+          {data.map((token, index) => {
             return (
-              <div>
-                <div
-                  className="relative flex flex-col items-center justify-center overflow-hidden rounded-[4px_4px_0px_0px] border-[1px] border-solid border-orange-500 pb-[100%]"
-                  key={index}
-                >
+              <div key={index}>
+                <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-[4px_4px_0px_0px] border-[1px] border-solid border-orange-500 pb-[100%]">
                   <Image src={token.token.image} layout="fill" />
                 </div>
                 <div className="w-full border-[1px] border-solid border-orange-500 bg-black text-center text-white">{`${token.token.tokenId}`}</div>
