@@ -1,8 +1,9 @@
 import Link from "next/link";
 
-const Header = ({ isReset, toggleReset }) => {
+const Header = ({ isReset, toggleReset, dataShowing, toggleData }) => {
   const onClickHandler = () => {
     toggleReset((isReset = true));
+    toggleData((dataShowing = false));
     console.log(isReset);
   };
 

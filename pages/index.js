@@ -6,6 +6,7 @@ import Body from "../components/Body";
 
 export default function Home() {
   const [reset, setReset] = useState(false);
+  const [dataToggle, setDataToggle] = useState(false);
 
   return (
     <div>
@@ -16,8 +17,18 @@ export default function Home() {
       </Head>
 
       <main className="relative h-screen w-screen overflow-x-hidden bg-black">
-        <Header isReset={reset} toggleReset={setReset} />
-        <Body isReset={reset} />
+        <Header
+          isReset={reset}
+          toggleReset={setReset}
+          dataShowing={dataToggle}
+          toggleData={setDataToggle}
+        />
+        <Body
+          isReset={reset}
+          toggleReset={setReset}
+          dataShowing={dataToggle}
+          toggleData={setDataToggle}
+        />
       </main>
     </div>
   );

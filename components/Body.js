@@ -31,14 +31,15 @@ const getData = async () => {
   return data;
 };
 
-const Body = ({ isReset }) => {
+const Body = ({ isReset, toggleReset, dataShowing, toggleData }) => {
   const [data, setData] = useState([]);
-  const [dataToggle, setDataToggle] = useState(false);
 
   const onClickHandler = async () => {
     const data = await getData();
     setData(data);
-    setDataToggle(!dataToggle);
+    toggleData((dataShowing = true));
+    toggleReset((isReset = false));
+    console.log(dataShowing);
   };
 
   return (
@@ -46,17 +47,13 @@ const Body = ({ isReset }) => {
       {/* Shows the button and the main div wrapper */}
       <div
         className={
-          !dataToggle
+          !dataShowing
             ? "flex h-full flex-wrap items-center justify-center bg-black text-lg font-bold"
             : "hidden"
         }
       >
         <button
-          className={
-            !dataToggle
-              ? "rounded-lg bg-blue-500 py-2 px-4 text-white"
-              : "hidden"
-          }
+          className="rounded-lg bg-blue-500 py-2 px-4 text-white"
           onClick={onClickHandler}
         >
           Check out my collection
@@ -65,7 +62,7 @@ const Body = ({ isReset }) => {
 
       {/* Shows the layout of all the NFTs */}
 
-      {dataToggle ? (
+      {dataShowing ? (
         <div
           className={
             isReset === true
