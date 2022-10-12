@@ -12,7 +12,7 @@ const options = {
 
 const getData = async () => {
   const data = await fetch(
-    `https://api.reservoir.tools/users/${myWalletAddress}/tokens/v5?collection=${collectionId}&sortBy=acquiredAt&sortDirection=desc&offset=0&limit=15&includeTopBid=false`,
+    `https://api.reservoir.tools/users/${myWalletAddress}/tokens/v5?collection=${collectionId}&sortBy=acquiredAt&sortDirection=desc&offset=0&limit=20&includeTopBid=false`,
     options
   )
     .then((res) => res.json())
@@ -65,16 +65,13 @@ const Body = ({ isReset }) => {
         >
           {data.tokens.map((token, index) => {
             return (
-              <div
-                className=" flex flex-col items-center justify-center overflow-hidden rounded-xl border-[1px] border-solid border-orange-500"
-                key={index}
-              >
-                <Image
-                  src={token.token.image}
-                  width={290}
-                  height={290}
-                  alt=""
-                />
+              <div>
+                <div
+                  className="relative flex flex-col items-center justify-center overflow-hidden rounded-[4px_4px_0px_0px] border-[1px] border-solid border-orange-500 pb-[100%]"
+                  key={index}
+                >
+                  <Image src={token.token.image} layout="fill" />
+                </div>
                 <div className="w-full border-[1px] border-solid border-orange-500 bg-black text-center text-white">{`${token.token.tokenId}`}</div>
               </div>
             );
