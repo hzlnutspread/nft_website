@@ -1,9 +1,12 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Header from "../components/Header";
 import Body from "../components/Body";
 
 export default function Home() {
+  const [reset, setReset] = useState(false);
+
   return (
     <div>
       <Head>
@@ -12,9 +15,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative h-screen bg-black">
-        <Header />
-        <Body />
+      <main className="relative h-screen w-screen overflow-x-hidden bg-black">
+        <Header isReset={reset} toggleReset={setReset} />
+        <Body isReset={reset} />
       </main>
     </div>
   );

@@ -1,15 +1,27 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+const options = {
+  method: "GET",
+  headers: { accept: "*/*", "x-api-key": "demo-api-key" },
+};
+
+const reservoir_api_key = process.env.RESERVOIR_KEY;
+const collectionId = "0xaAF03a65CbD8f01b512Cd8d530a675b3963dE255";
+const myWalletAddress = "0xdf5a18A102627c2E9C1Ba8534D0DAD94B284f619";
+
 const getData = async () => {
-  const data = await fetch("https://pokeapi.co/api/v2/pokemon/ditto")
+  const data = await fetch(
+    `https://api.reservoir.tools/users/${myWalletAddress}/tokens/v5?collection=${collectionId}&sortBy=acquiredAt&sortDirection=desc&offset=0&limit=15&includeTopBid=false`,
+    options
+  )
     .then((res) => res.json())
     .then((data) => data);
   console.log(data);
   return data;
 };
 
-const Body = () => {
+const Body = ({ isReset }) => {
   const [data, setData] = useState([]);
   const [dataToggle, setDataToggle] = useState(false);
 
@@ -44,47 +56,28 @@ const Body = () => {
       {/* Shows the layout of all the NFTs */}
 
       {dataToggle ? (
-        <div className="relative flex flex-row flex-wrap items-center justify-center gap-10 bg-black px-2 pt-[112px]">
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
-          <div>
-            <Image src="/square.jpg" width={300} height={300} />
-            <div className="border-2 border-solid border-orange-500 bg-black text-center text-white">{`${data.abilities[1].ability.name}`}</div>
-          </div>
+        <div
+          className={
+            isReset === true
+              ? "hidden"
+              : "grid grid-cols-2 gap-5 overflow-hidden bg-black px-8 pb-16 pt-[112px] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+          }
+        >
+          {Object.keys(data.tokens).map((key, index) => {
+            return (
+              <div
+                className=" flex flex-col items-center justify-center overflow-hidden rounded-xl border-[1px] border-solid border-orange-500"
+                key={index}
+              >
+                <Image
+                  src={data.tokens[key].token.image}
+                  width={290}
+                  height={290}
+                />
+                <div className="w-full border-[1px] border-solid border-orange-500 bg-black text-center text-white">{`${data.tokens[key].token.tokenId}`}</div>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div></div>
