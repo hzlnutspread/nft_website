@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ModalView from "../components/ModalView";
+import Spinner from "./Spinner";
 
 // CONSTANTS
 const reservoir_api_key = process.env.RESERVOIR_KEY;
@@ -57,38 +58,47 @@ const Body = ({
   const [data, setData] = useState([]);
   const [metaData, setMetaData] = useState([]);
   const [modalView, setModalToggle] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onClickHandler = async () => {
+    setLoading(true);
     const data = await getCollectionData();
     setData(data);
     toggleData((dataShowing = true));
     toggleReset((isReset = false));
     console.log(dataShowing);
+    setLoading(false);
   };
 
   const onShowStatsHandler = async (tokenId) => {
+    setLoading(true);
     const metaData = await getTokenMetaData(tokenId);
     setMetaData(metaData);
     setModalToggle(!modalView);
+    setLoading(false);
   };
 
   return (
     <>
       {/* Shows the button and the main div wrapper */}
-      <div
-        className={
-          !dataShowing
-            ? "flex h-full flex-wrap items-center justify-center bg-black text-lg font-bold"
-            : "hidden"
-        }
-      >
-        <button
-          className="rounded-lg bg-blue-500 py-2 px-4 text-white"
-          onClick={onClickHandler}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div
+          className={
+            !dataShowing
+              ? "flex h-full flex-wrap items-center justify-center bg-black text-lg font-bold"
+              : "hidden"
+          }
         >
-          Check out my collection
-        </button>
-      </div>
+          <button
+            className="rounded-lg bg-blue-500 py-2 px-4 text-white"
+            onClick={onClickHandler}
+          >
+            Check out my collection
+          </button>
+        </div>
+      )}
 
       {/* Shows the layout of all the NFTs */}
 

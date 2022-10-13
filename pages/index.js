@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Header from "../components/Header";
 import Body from "../components/Body";
-import ModalView from "../components/ModalView";
 
 export default function Home() {
   const [reset, setReset] = useState(false);
