@@ -69,7 +69,6 @@ const Body = ({
   const onShowStatsHandler = async (tokenId) => {
     const metaData = await getTokenMetaData(tokenId);
     setMetaData(metaData);
-    console.log(metaData.tokens[0].token.tokenId);
     setModalToggle(!modalView);
   };
 
