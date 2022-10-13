@@ -35,6 +35,15 @@ const getCollectionData = async () => {
 };
 
 // GET THE METADATA FOR EACH NFT
+const getTokenMetaData = async (tokenId) => {
+  const data = await fetch(
+    `https://api.reservoir.tools/tokens/v5?tokens=${collectionId}%3A${tokenId}&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=true`,
+    options
+  )
+    .then((res) => res.json())
+    .then((data) => data);
+  return data;
+};
 
 // START OF THE MAIN BODY
 const Body = ({
@@ -46,7 +55,6 @@ const Body = ({
   toggleModal,
 }) => {
   const [data, setData] = useState([]);
-  const [tokenId, setTokenId] = useState();
   const [metaData, setMetaData] = useState([]);
   const [modalView, setModalToggle] = useState(false);
 
@@ -58,20 +66,10 @@ const Body = ({
     console.log(dataShowing);
   };
 
-  const getTokenMetaData = async () => {
-    const data = await fetch(
-      `https://api.reservoir.tools/tokens/v5?tokens=${collectionId}%3A${tokenId}&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=true`,
-      options
-    )
-      .then((res) => res.json())
-      .then((data) => data);
-    console.log(data);
-    return data;
-  };
-
-  const onShowStatsHandler = async () => {
-    const metaData = await getTokenMetaData();
+  const onShowStatsHandler = async (tokenId) => {
+    const metaData = await getTokenMetaData(tokenId);
     setMetaData(metaData);
+    console.log(metaData.tokens[0].token.tokenId);
     setModalToggle(!modalView);
   };
 
@@ -119,8 +117,7 @@ const Body = ({
                 <div
                   className="w-full cursor-pointer rounded-[0px_0px_4px_4px] bg-blue-500  p-3 text-center text-white"
                   onClick={() => {
-                    setTokenId(token.token.tokenId);
-                    onShowStatsHandler();
+                    onShowStatsHandler(token.token.tokenId);
                   }}
                 >
                   Show Stats
@@ -129,7 +126,11 @@ const Body = ({
             );
           })}
           {modalView ? (
-            <ModalView isModal={modalView} toggleModal={setModalToggle} />
+            <ModalView
+              isModal={modalView}
+              toggleModal={setModalToggle}
+              modalMetaData={metaData}
+            />
           ) : null}
         </div>
       ) : (
