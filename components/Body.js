@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import ModalView from "../components/ModalView";
 
+// CONSTANTS
 const reservoir_api_key = process.env.RESERVOIR_KEY;
 const collectionId = "0xaAF03a65CbD8f01b512Cd8d530a675b3963dE255";
 const myWalletAddress = "0xdf5a18A102627c2E9C1Ba8534D0DAD94B284f619";
@@ -11,7 +13,8 @@ const options = {
   headers: { accept: "*/*", "x-api-key": reservoir_api_key },
 };
 
-const getData = async () => {
+// CHOOSE WHICH PROJECT TO SHOW
+const getCollectionData = async () => {
   let data = [];
   let lastRunCount = 0;
   do {
@@ -31,15 +34,45 @@ const getData = async () => {
   return data;
 };
 
-const Body = ({ isReset, toggleReset, dataShowing, toggleData }) => {
+// GET THE METADATA FOR EACH NFT
+
+// START OF THE MAIN BODY
+const Body = ({
+  isReset,
+  toggleReset,
+  dataShowing,
+  toggleData,
+  isModal,
+  toggleModal,
+}) => {
   const [data, setData] = useState([]);
+  const [tokenId, setTokenId] = useState();
+  const [metaData, setMetaData] = useState([]);
+  const [modalView, setModalToggle] = useState(false);
 
   const onClickHandler = async () => {
-    const data = await getData();
+    const data = await getCollectionData();
     setData(data);
     toggleData((dataShowing = true));
     toggleReset((isReset = false));
     console.log(dataShowing);
+  };
+
+  const getTokenMetaData = async () => {
+    const data = await fetch(
+      `https://api.reservoir.tools/tokens/v5?tokens=${collectionId}%3A${tokenId}&sortBy=floorAskPrice&limit=20&includeTopBid=false&includeAttributes=true`,
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+    console.log(data);
+    return data;
+  };
+
+  const onShowStatsHandler = async () => {
+    const metaData = await getTokenMetaData();
+    setMetaData(metaData);
+    setModalToggle(!modalView);
   };
 
   return (
@@ -74,18 +107,30 @@ const Body = ({ isReset, toggleReset, dataShowing, toggleData }) => {
             return (
               <div
                 key={index}
-                className="overflow-hidden rounded-[4px_4px_4px_4px] border-[4px] border-double border-white"
+                className="overflow-hidden rounded-[0px_0px_8px_8px] border-[4px] border-double border-white"
               >
                 <div className="relative pb-[100%]">
-                  <Image src={token.token.image} layout="fill" />
+                  <Image src={token.token.image} layout="fill" alt="" />
                 </div>
-                <div className="w-fullbg-black text-center text-white">{`#${token.token.tokenId}`}</div>
-                <div className="w-full cursor-pointer rounded-[0px_0px_4px_4px]  bg-blue-500  p-3 text-center text-white">
+                <div
+                  className="w-fullbg-black border-[1px] border-white text-center text-white"
+                  id="token-id"
+                >{`#${token.token.tokenId}`}</div>
+                <div
+                  className="w-full cursor-pointer rounded-[0px_0px_4px_4px] bg-blue-500  p-3 text-center text-white"
+                  onClick={() => {
+                    setTokenId(token.token.tokenId);
+                    onShowStatsHandler();
+                  }}
+                >
                   Show Stats
                 </div>
               </div>
             );
           })}
+          {modalView ? (
+            <ModalView isModal={modalView} toggleModal={setModalToggle} />
+          ) : null}
         </div>
       ) : (
         <div></div>
