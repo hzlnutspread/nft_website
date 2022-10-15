@@ -62,6 +62,10 @@ const Body = ({
   const [loading, setLoading] = useState(false);
 
   const onClickHandler = async (e) => {
+    if (walletAddress === "" || collectionAddress === "") {
+      alert("Don't leave any fields blank!");
+      return;
+    }
     console.log("Fetching data");
     e.preventDefault();
     setLoading(true);
@@ -112,6 +116,7 @@ const Body = ({
                   onChange={(e) => setWalletAddress(e.target.value)}
                   value={walletAddress}
                   className="text-md rounded-lg  p-2 duration-100 focus:scale-[1.05] focus:outline-0 "
+                  autoComplete="off"
                 />
               </label>
             </fieldset>
@@ -125,6 +130,7 @@ const Body = ({
                   onChange={(e) => setCollectionAddress(e.target.value)}
                   value={collectionAddress}
                   className="text-md rounded-lg p-2 duration-100 focus:scale-[1.05] focus:outline-0"
+                  autoComplete="off"
                 />
               </label>
             </fieldset>
