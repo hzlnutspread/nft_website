@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["i.seadn.io", "lh3.googleusercontent.com"],
+    domains: [
+      "i.seadn.io",
+      "lh3.googleusercontent.com",
+      "allstars.forms.aifa.football",
+    ],
   },
 };
 

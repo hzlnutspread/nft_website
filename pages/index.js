@@ -6,6 +6,8 @@ import Body from "../components/Body";
 export default function Home() {
   const [reset, setReset] = useState(false);
   const [dataToggle, setDataToggle] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
+  const [collectionAddress, setCollectionAddress] = useState("");
 
   return (
     <div>
@@ -21,12 +23,20 @@ export default function Home() {
           toggleReset={setReset}
           dataShowing={dataToggle}
           toggleData={setDataToggle}
+          walletAddress={walletAddress}
+          setWalletAddress={setWalletAddress}
+          collectionAddress={collectionAddress}
+          setCollectionAddress={setCollectionAddress}
         />
         <Body
           isReset={reset}
           toggleReset={setReset}
           dataShowing={dataToggle}
           toggleData={setDataToggle}
+          walletAddress={walletAddress}
+          setWalletAddress={setWalletAddress}
+          collectionAddress={collectionAddress}
+          setCollectionAddress={setCollectionAddress}
         />
       </main>
     </div>
