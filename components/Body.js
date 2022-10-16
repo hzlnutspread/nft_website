@@ -87,7 +87,7 @@ const Body = ({
 
   return (
     <>
-      {/* Shows the button and the main div wrapper */}
+      {/* Shows the input form */}
       {loading ? (
         <Spinner />
       ) : (
@@ -98,6 +98,23 @@ const Body = ({
               : "hidden"
           }
         >
+          <div className="examples-box mb-4 flex flex-col items-center justify-center rounded-lg border-[4px] border-double border-white bg-white/20 p-2 text-white">
+            <div>Test it out!</div>
+            <div>
+              <div>
+                My wallet:{" "}
+                <span className="text-[16px] font-normal">
+                  0xdf5a18A102627c2E9C1Ba8534D0DAD94B284f619
+                </span>
+              </div>
+              <div>
+                The Seekers collection:{" "}
+                <span className="text-[16px] font-normal">
+                  0xaAF03a65CbD8f01b512Cd8d530a675b3963dE255
+                </span>
+              </div>
+            </div>
+          </div>
           <form
             id="input_form"
             onSubmit={(walletAddress, collectionId) => {

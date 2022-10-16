@@ -9,7 +9,6 @@ const Header = ({
   setCollectionAddress,
 }) => {
   const onClickHandler = () => {
-    setWalletAddress("");
     setCollectionAddress("");
     console.log("resetting input fields");
     toggleReset((isReset = true));
