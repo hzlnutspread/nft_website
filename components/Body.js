@@ -104,7 +104,7 @@ const Body = ({
               <div>
                 My wallet:{" "}
                 <span className="text-[16px] font-normal">
-                  0xdf5a18A102627c2E9C1Ba8534D0DAD94B284f619
+                  0x15eF2FFc8e6Fb95Ff9964eBF29AFFE665d343e2B
                 </span>
               </div>
               <div>
